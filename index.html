@@ -334,6 +334,59 @@
   .footer-sponsor-badge{display:inline-flex;line-height:0;}
   .footer-sponsor-badge img{display:block;height:38px;}
   .footer-sponsor-qr{width:56px;height:56px;border-radius:6px;display:block;}
+
+  .upi-modal-overlay{
+    position:fixed;inset:0;
+    background:rgba(10,6,4,0.72);
+    backdrop-filter:blur(4px);
+    display:none;
+    align-items:center;justify-content:center;
+    padding:24px;
+    z-index:1000;
+  }
+  .upi-modal-overlay.open{display:flex;}
+  .upi-modal{
+    position:relative;
+    background:var(--panel-cream);
+    color:var(--text-dark);
+    border-radius:18px;
+    width:100%;max-width:340px;
+    padding:32px 28px 28px;
+    display:flex;flex-direction:column;align-items:center;text-align:center;
+    box-shadow:0 30px 70px -20px rgba(0,0,0,0.7);
+  }
+  .upi-modal-close{
+    position:absolute;top:14px;right:14px;
+    width:28px;height:28px;
+    border:none;background:rgba(43,27,18,0.08);
+    border-radius:50%;
+    font-size:18px;line-height:1;
+    color:var(--text-dark);
+    cursor:pointer;
+  }
+  .upi-modal-close:hover{background:rgba(43,27,18,0.16);}
+  .upi-modal-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--muted-dark);margin-bottom:14px;
+  }
+  .upi-modal-qr{width:180px;height:180px;border-radius:8px;background:var(--panel-cream);}
+  .upi-modal-name{font-family:'Fraunces',serif;font-weight:600;font-size:19px;margin-top:16px;}
+  .upi-modal-amt{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--accent-marigold-dark);margin-top:4px;}
+  .upi-modal-id{
+    font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted-dark);
+    margin-top:12px;padding:7px 12px;background:rgba(43,27,18,0.06);border-radius:6px;
+    word-break:break-all;
+  }
+  .upi-modal-open-btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    margin-top:20px;width:100%;
+    background:var(--accent-marigold);color:#1E140F;
+    font-family:'Inter',sans-serif;font-weight:600;font-size:14.5px;
+    padding:13px 20px;border-radius:9px;text-decoration:none;
+    box-shadow:0 8px 20px -8px rgba(232,114,12,0.6);
+  }
+  .upi-modal-hint{font-size:11.5px;color:var(--muted-dark);margin-top:12px;line-height:1.5;}
 </style>
 </head>
 <body>
@@ -443,9 +496,8 @@
   <footer>
     <div class="footer-sponsor">
       <span class="footer-sponsor-text">Enjoying this tool? Sponsor via UPI</span>
-      <a class="footer-sponsor-badge"
-         href="upi://pay?pa=shubhgupta194%40oksbi&pn=Sponsor&cu=INR"
-         target="_blank" rel="noopener">
+      <a class="footer-sponsor-badge" id="footerSponsorBadge"
+         href="upi://pay?pa=shubhgupta194%40oksbi&pn=Sponsor&cu=INR">
         <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTAiIGhlaWdodD0iNDYiIHZpZXdCb3g9IjAgMCAxOTAgNDYiPgogICAgPHJlY3Qgd2lkdGg9IjE5MCIgaGVpZ2h0PSI0NiIgcng9IjkiIGZpbGw9IiNFODcyMEMiLz4KICAgIDxwYXRoIGQ9Ik0yMiAxNUgzN1YyMkMzNyAyNSAzNC41IDI3IDMxIDI3SDMwQzI2LjUgMjcgMjQgMjUgMjQgMjJWMTVaIiBmaWxsPSJub25lIiBzdHJva2U9IiMxRTE0MEYiIHN0cm9rZS13aWR0aD0iMS42Ii8+CiAgICA8cGF0aCBkPSJNMzcgMTYuNUgzOUM0MC4xIDE2LjUgNDEgMTcuNCA0MSAxOC41QzQxIDE5LjYgNDAuMSAyMC41IDM5IDIwLjVIMzcuNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMUUxNDBGIiBzdHJva2Utd2lkdGg9IjEuNiIvPgogICAgPHRleHQgeD0iNTIiIHk9IjI4IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTUiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMxRTE0MEYiPlNwb25zb3IgdmlhIFVQSTwvdGV4dD4KICA8L3N2Zz4=" alt="Sponsor via UPI" />
       </a>
       <img class="footer-sponsor-qr"
@@ -454,6 +506,19 @@
     </div>
     <p>Works because UPI apps register the <code>upi://pay</code> scheme on Android/iOS — tapping the badge on a phone opens the sponsor's UPI app with your ID pre-filled. On desktop, GitHub renders the QR image inline, so anyone can scan it with their phone. Everything above (QR + badge) is generated as inline data URIs, so the snippet works standalone — no image hosting needed.</p>
   </footer>
+</div>
+
+<div class="upi-modal-overlay" id="upiModalOverlay">
+  <div class="upi-modal" id="upiModal" role="dialog" aria-modal="true" aria-label="Sponsor via UPI">
+    <button type="button" class="upi-modal-close" id="upiModalClose" aria-label="Close">&times;</button>
+    <div class="upi-modal-label">Scan or tap to pay</div>
+    <img class="upi-modal-qr" id="upiModalQr" src="" alt="UPI QR code" />
+    <div class="upi-modal-name" id="upiModalName"></div>
+    <div class="upi-modal-amt" id="upiModalAmt"></div>
+    <div class="upi-modal-id" id="upiModalId"></div>
+    <a class="upi-modal-open-btn" id="upiModalOpenBtn" href="#">Open in UPI App</a>
+    <div class="upi-modal-hint">Scan the QR from another device, or tap the button on your phone to open your UPI app directly.</div>
+  </div>
 </div>
 
 <script>
@@ -486,6 +551,15 @@ const embedBadgeImg = document.getElementById('embedBadgeImg');
 const embedQrImg = document.getElementById('embedQrImg');
 const backdropLightBtn = document.getElementById('backdropLightBtn');
 const backdropDarkBtn = document.getElementById('backdropDarkBtn');
+const footerSponsorBadge = document.getElementById('footerSponsorBadge');
+const upiModalOverlay = document.getElementById('upiModalOverlay');
+const upiModal = document.getElementById('upiModal');
+const upiModalClose = document.getElementById('upiModalClose');
+const upiModalQr = document.getElementById('upiModalQr');
+const upiModalName = document.getElementById('upiModalName');
+const upiModalAmt = document.getElementById('upiModalAmt');
+const upiModalId = document.getElementById('upiModalId');
+const upiModalOpenBtn = document.getElementById('upiModalOpenBtn');
 
 let amountMode = 'open'; // 'open' | 'fixed'
 let fixedAmount = 49;
@@ -548,6 +622,23 @@ function applyColorStyles(){
   badgeLink.style.color = colors.badgeText;
   badgeLink.style.boxShadow = `0 8px 20px -8px ${hexToRgba(colors.badgeBg, 0.6)}`;
   previewCupIcon.querySelectorAll('path').forEach(p => p.setAttribute('stroke', colors.badgeText));
+}
+
+function openUpiModal({ qrSrc, name, amount, upiId, uri, accentBg, accentText }){
+  upiModalQr.src = qrSrc || '';
+  upiModalName.textContent = name || 'Sponsor';
+  upiModalAmt.textContent = amount || '';
+  upiModalAmt.style.display = amount ? 'block' : 'none';
+  upiModalId.textContent = upiId || '';
+  upiModalOpenBtn.href = uri || '#';
+  upiModalOpenBtn.style.background = accentBg || DEFAULT_COLORS.badgeBg;
+  upiModalOpenBtn.style.color = accentText || DEFAULT_COLORS.badgeText;
+  upiModalOpenBtn.style.boxShadow = `0 8px 20px -8px ${hexToRgba(accentBg || DEFAULT_COLORS.badgeBg, 0.6)}`;
+  upiModalOverlay.classList.add('open');
+  upiModalClose.focus();
+}
+function closeUpiModal(){
+  upiModalOverlay.classList.remove('open');
 }
 
 let qr;
@@ -712,6 +803,42 @@ backdropDarkBtn.addEventListener('click', () => {
   backdropLightBtn.classList.remove('active');
   embedPreviewSurface.classList.remove('backdrop-light');
   embedPreviewSurface.classList.add('backdrop-dark');
+});
+
+badgeLink.addEventListener('click', (e) => {
+  e.preventDefault();
+  const uri = buildUpiUri();
+  if(!uri) return;
+  openUpiModal({
+    qrSrc: document.getElementById('qrCanvas').toDataURL('image/png'),
+    name: previewName.textContent,
+    amount: (amountMode === 'fixed' && fixedAmount) ? `₹${fixedAmount}` : '',
+    upiId: upiIdInput.value.trim(),
+    uri,
+    accentBg: colors.badgeBg,
+    accentText: colors.badgeText
+  });
+});
+
+footerSponsorBadge.addEventListener('click', (e) => {
+  e.preventDefault();
+  openUpiModal({
+    qrSrc: document.querySelector('.footer-sponsor-qr').src,
+    name: 'Sponsor Shubh',
+    amount: '',
+    upiId: 'shubhgupta194@oksbi',
+    uri: footerSponsorBadge.href,
+    accentBg: DEFAULT_COLORS.badgeBg,
+    accentText: DEFAULT_COLORS.badgeText
+  });
+});
+
+upiModalClose.addEventListener('click', closeUpiModal);
+upiModalOverlay.addEventListener('click', (e) => {
+  if(e.target === upiModalOverlay) closeUpiModal();
+});
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape' && upiModalOverlay.classList.contains('open')) closeUpiModal();
 });
 
 // init — mode is 'open', so no tier button should appear selected yet
