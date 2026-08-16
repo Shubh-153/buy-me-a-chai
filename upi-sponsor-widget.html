@@ -308,7 +308,7 @@
       </div>
       <div class="field">
         <label>Display name</label>
-        <input type="text" id="payeeName" placeholder="Shubh" value="" />
+        <input type="text" id="payeeName" placeholder="Your Name" value="" />
       </div>
       <div class="field">
         <label>Amount</label>
@@ -553,8 +553,7 @@ copyBtn.addEventListener('click', () => {
 
 [upiIdInput, nameInput, noteInput].forEach(inp => inp.addEventListener('input', updateAll));
 
-// init
-tierRow.querySelectorAll('.tier-btn')[1].classList.add('active');
+// init — mode is 'open', so no tier button should appear selected yet
 fixedAmount = 49;
 amountMode = 'open';
 updateAll();
