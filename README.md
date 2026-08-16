@@ -2,7 +2,7 @@
 
 A self-contained UPI sponsor button and QR ticket generator for your README — no backend, no third-party account, no waitlist. Just your UPI ID.
 
-Open [`upi-sponsor-widget.html`](./upi-sponsor-widget.html) in a browser to generate your own badge + QR snippet.
+Open [`index.html`](./index.html) in a browser to generate your own badge + QR snippet.
 
 ### ☕ Sponsor via UPI
 
