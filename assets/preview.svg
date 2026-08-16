@@ -1,0 +1,57 @@
+<svg width="360" height="440" viewBox="0 0 360 440" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-label="Preview of a UPI sponsor ticket: QR code, sponsor name and amount, and a Sponsor via UPI badge">
+  <title>UPI Sponsor Widget preview</title>
+
+  <!-- card -->
+  <rect x="0" y="0" width="360" height="440" rx="16" fill="#F3E6D3"/>
+
+  <!-- "SCAN TO PAY" label -->
+  <text x="180" y="40" text-anchor="middle"
+        font-family="Consolas, 'Courier New', monospace" font-size="11"
+        letter-spacing="1.5" fill="#6E5C4C">SCAN TO PAY</text>
+
+  <!-- decorative QR-like pattern, 160x160 centered -->
+  <g transform="translate(100,56)">
+    <rect width="160" height="160" rx="8" fill="#F3E6D3"/>
+    <g fill="none" stroke="#2B1B12" stroke-width="6">
+      <rect x="6" y="6" width="32" height="32"/>
+      <rect x="122" y="6" width="32" height="32"/>
+      <rect x="6" y="122" width="32" height="32"/>
+    </g>
+    <g fill="#2B1B12">
+      <rect x="16" y="16" width="12" height="12"/>
+      <rect x="132" y="16" width="12" height="12"/>
+      <rect x="16" y="132" width="12" height="12"/>
+      <rect x="52" y="10" width="8" height="8"/><rect x="68" y="10" width="8" height="8"/>
+      <rect x="52" y="26" width="8" height="8"/><rect x="84" y="26" width="8" height="8"/>
+      <rect x="100" y="42" width="8" height="8"/><rect x="60" y="58" width="8" height="8"/>
+      <rect x="76" y="74" width="8" height="8"/><rect x="44" y="90" width="8" height="8"/>
+      <rect x="92" y="90" width="8" height="8"/><rect x="60" y="106" width="8" height="8"/>
+      <rect x="108" y="106" width="8" height="8"/><rect x="76" y="122" width="8" height="8"/>
+      <rect x="44" y="138" width="8" height="8"/><rect x="60" y="60" width="8" height="8"/>
+      <rect x="120" y="60" width="8" height="8"/><rect x="120" y="90" width="8" height="8"/>
+    </g>
+  </g>
+
+  <!-- name / amount -->
+  <text x="180" y="248" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="19"
+        fill="#2B1B12">Sponsor yourname</text>
+  <text x="180" y="270" text-anchor="middle"
+        font-family="Consolas, 'Courier New', monospace" font-size="13"
+        fill="#C25E08">₹49</text>
+
+  <!-- perforation -->
+  <line x1="6" y1="296" x2="354" y2="296" stroke="#2B1B12" stroke-opacity="0.35"
+        stroke-width="2" stroke-dasharray="6 6"/>
+  <circle cx="0" cy="296" r="11" fill="#1E140F"/>
+  <circle cx="360" cy="296" r="11" fill="#1E140F"/>
+
+  <!-- badge (path data copied verbatim from badgeSvgString() in index.html for pixel fidelity) -->
+  <g transform="translate(85,324)">
+    <rect width="190" height="46" rx="9" fill="#E8720C"/>
+    <path d="M22 15H37V22C37 25 34.5 27 31 27H30C26.5 27 24 25 24 22V15Z" fill="none" stroke="#1E140F" stroke-width="1.6"/>
+    <path d="M37 16.5H39C40.1 16.5 41 17.4 41 18.5C41 19.6 40.1 20.5 39 20.5H37.5" fill="none" stroke="#1E140F" stroke-width="1.6"/>
+    <text x="52" y="28" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#1E140F">Sponsor via UPI</text>
+  </g>
+</svg>
