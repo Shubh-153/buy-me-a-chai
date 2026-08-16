@@ -37,3 +37,18 @@ Record of decisions made for this project, in chronological order.
 - Added a modal (`#upiModalOverlay`/`#upiModal`) showing the QR code, sponsor name, amount (if fixed), and UPI ID, plus an explicit "Open in UPI App" button that carries the actual `upi://pay` link.
 - Wired to both clickable badges on `index.html`: the live-preview ticket badge (`#badgeLink`, dynamic data from the form) and the footer CTA badge (`#footerSponsorBadge`, static data for `shubhgupta194@oksbi`).
 - **Scope limitation, by necessity:** this only applies to the two badges living on `index.html` itself, which can run JavaScript. The badge/QR snippet people copy into their own **README.md** cannot get this behavior — GitHub renders markdown statically with no JS execution, so that copied badge stays a direct `upi://pay` link, same as before.
+
+## 2026-08-17 — "Made with love" credit
+
+- Added "Made with ❤️ by [Shubh](https://shubhuu.in)" to both the `index.html` footer and the bottom of README.md.
+
+## 2026-08-17 — UI improvement pass (proposed, then approved as a batch)
+
+- **Grouped color pickers** into three labeled sections (Badge / QR code / Ticket) instead of one flat 2×6 grid, so related controls read together.
+- **Added editable hex text inputs** next to each color swatch, two-way synced with the `<input type="color">` (typing/pasting a valid `#rrggbb` updates the picker and vice versa) — native color swatches alone give no way to see or type an exact value.
+- **Mobile pass:** added a `max-width:480px` media query (previously the only breakpoint was the 820px two-column-grid collapse) covering the color groups, mode-row buttons, embed-preview header, modal padding, and footer-sponsor layout.
+- **Replaced the stacked "styled ticket" + "embedded preview" blocks with a tab switcher** ("Styled ticket" / "Embedded (real)") to cut vertical clutter — they were showing overlapping badge+QR info one above the other.
+- **Modal now fades/scales in and out** (`.upi-modal-overlay`/`.upi-modal` transitions) instead of an abrupt `display:none`/`flex` toggle; uses `opacity`/`visibility`/`pointer-events` so it stays out of the way when closed.
+- **Modal traps Tab focus** while open (cycles between its own focusable elements) and **returns focus** to whatever triggered it on close — previously a keyboard user could Tab out into the page behind the open modal.
+- **"Reset" colors control restyled** as a pill button with a ↺ icon instead of a small text link, so it doesn't get lost next to six color swatches.
+- **Tier buttons show a ✓ when active** (pure CSS `::after`, no JS change) — the active tier previously relied on background-fill alone to signal selection.
